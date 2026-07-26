@@ -43,8 +43,7 @@ fun provideHttpClient(
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, request ->
                 if (exception is ResponseException) throw handleResponseException(
-                    exception.response,
-                    json
+                    exception.response, json
                 )
             }
         }
@@ -52,8 +51,7 @@ fun provideHttpClient(
 }
 
 private suspend fun handleResponseException(
-    response: HttpResponse,
-    json: Json
+    response: HttpResponse, json: Json
 ): QaemException {
     when (val responseCode = response.status.value) {
         HttpStatusCode.Unauthorized.value -> throw QaemException.Client.Unauthorized

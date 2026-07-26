@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.put
+import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
@@ -15,9 +16,8 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-class RemoteDataSourceProviderImpl(
-    private val client: HttpClient,
-    private val json: Json
+class RemoteDataSourceProvider(
+    private val client: HttpClient, private val json: Json
 ) : IRemoteDataSourceProvider {
     override suspend fun <ResponseBody, RequestBody> request(
         networkMethods: NetworkMethods,
@@ -25,7 +25,7 @@ class RemoteDataSourceProviderImpl(
         params: Map<String, Any>?,
         header: Map<String, Any>?,
         requestBody: RequestBody?,
-        serializer: KSerializer<ResponseBody>
+        serializer: KSerializer<ResponseBody>,
     ): ResponseBody {
         val response: HttpResponse = when (networkMethods) {
             NetworkMethods.GET -> {
@@ -92,6 +92,29 @@ class RemoteDataSourceProviderImpl(
                     }
                 }
             }
+
+            NetworkMethods.CUSTOM -> {
+                if (isBaseUrl(url)) {
+                    client.request {
+                        configureUrl(url)
+                        configureParams(params)
+                        configureHeader(header)
+
+                        requestBody?.let {
+                            setBody(it)
+                        }
+                    }
+                } else {
+                    client.request {
+                        configureParams(params)
+                        configureHeader(header)
+                        requestBody?.let {
+                            setBody(it)
+                        }
+                    }
+                }
+
+            }
         }
         return handleResponse(response, serializer)
     }
@@ -114,8 +137,7 @@ class RemoteDataSourceProviderImpl(
     }
 
     private suspend fun <ResponseBody> handleResponse(
-        response: HttpResponse,
-        serializer: KSerializer<ResponseBody>
+        response: HttpResponse, serializer: KSerializer<ResponseBody>
     ): ResponseBody {
         val responseBodyText = response.bodyAsText()
         return json.decodeFromString(serializer, responseBodyText)

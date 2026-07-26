@@ -1,9 +1,11 @@
 package com.app.qaem.common.di
 
-import com.app.qaem.common.data.remote.RemoteDataSourceProviderImpl
+import com.app.qaem.common.data.remote.RemoteDataSourceProvider
 import com.app.qaem.common.data.remote.provideHttpClient
 import com.app.qaem.common.domain.repository.remote.IRemoteDataSourceProvider
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 
@@ -16,14 +18,7 @@ val remoteDataSourceModule = module {
             encodeDefaults = true
         }
     }
-    single {
-        provideHttpClient(get())
-    }
+    singleOf(::provideHttpClient)
 
-    single<IRemoteDataSourceProvider> {
-        RemoteDataSourceProviderImpl(
-            get(),
-            get()
-        )
-    }
+    singleOf(::RemoteDataSourceProvider) bind IRemoteDataSourceProvider::class
 }
