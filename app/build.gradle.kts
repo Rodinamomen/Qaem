@@ -65,4 +65,13 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    //Koin
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+
+    // data store
+    implementation(libs.androidx.datastore.preferences)
 }
