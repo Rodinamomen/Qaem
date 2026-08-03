@@ -30,7 +30,7 @@ sealed class QaemException(
     sealed class Client(@Transient override val message: String? = null) : QaemException(message) {
         data object Unauthorized : Client("Unauthorized")
         data class ResponseValidation(
-            val errors: Map<ErrorKey, String>, @Transient override val message: String? = null
+            val errors: Map<IErrorKey, String>, @Transient override val message: String? = null
         ) : Client(message)
 
         data class Unhandled(val errorCode: Int, @Transient override val message: String? = null) :

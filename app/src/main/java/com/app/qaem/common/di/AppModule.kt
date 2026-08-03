@@ -1,0 +1,43 @@
+package com.app.qaem.common.di
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
+import com.app.qaem.common.ui.eventcontoller.EventController
+import com.app.qaem.common.ui.eventcontoller.IEventController
+import com.app.qaem.common.ui.language.ILanguageEvent
+import com.app.qaem.common.ui.loading.ILoadingEvent
+import com.app.qaem.common.ui.message.IMessageEvent
+import com.app.qaem.common.ui.navigation.IMainGraph
+import com.app.qaem.common.ui.navigation.INavigator
+import com.app.qaem.common.ui.navigation.Navigator
+import com.app.qaem.common.ui.urlhandler.IUrlEvent
+import kotlinx.serialization.json.Json
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
+
+val appModule = module {
+    single<INavigator> { Navigator(startGraph = IMainGraph.RootGraph) }
+    single<IEventController<IMessageEvent>>(qualifier = named("MessageEvent")) { EventController() }
+    single<IEventController<ILoadingEvent>>(qualifier = named("LoadingEvent")) { EventController() }
+    single<IEventController<ILanguageEvent>>(qualifier = named("LanguageEvent")) { EventController() }
+    single<IEventController<IUrlEvent>>(qualifier = named("UrlEvent")) { EventController() }
+    single<Json> {
+        Json {
+            ignoreUnknownKeys = true
+            prettyPrint = true
+            isLenient = true
+            encodeDefaults = true
+        }
+    }
+    single<DataStore<Preferences>> {
+        PreferenceDataStoreFactory.create {
+            get<Context>().preferencesDataStoreFile("delivary_user_datastore")
+        }
+    }
+    includes(remoteDataSourceModule)
+    includes(localDataSourceModule)
+    includes(featuresModule)
+}
