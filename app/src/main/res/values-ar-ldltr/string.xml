@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General -->
+    <string name="unknown_error">حدث خطأ غير معروف</string>
+    <string name="something_wrong">حدث خطأ</string>
+</resources>
