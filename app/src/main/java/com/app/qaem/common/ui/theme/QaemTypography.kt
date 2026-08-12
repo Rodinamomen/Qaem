@@ -1,4 +1,4 @@
-package com.app.qaem.ui.theme
+package com.app.qaem.common.ui.theme
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
@@ -8,8 +8,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.app.qaem.R
 
-val localQaemTypography =
-    staticCompositionLocalOf<QaemFitTextStyle> { error("Cannot provide text style") }
+val LocalQaemTypography =
+    staticCompositionLocalOf<QaemTypography> { error("Cannot provide text style") }
 val thmanyah = FontFamily(
     Font(R.font.thmanyah_sans_bold, FontWeight.Bold),
     Font(R.font.thmanyah_sans_medium, FontWeight.Medium),
@@ -24,7 +24,7 @@ data class SizedTypography(
     val small: TextStyle,
 )
 
-data class QaemFitTextStyle(
+data class QaemTypography(
     val headline: SizedTypography,
     val title: SizedTypography,
     val body: SizedTypography,
@@ -140,7 +140,7 @@ private val label = SizedTypography(
     ),
 )
 
-val thmanyahTypography = QaemFitTextStyle(
+val thmanyahTypography = QaemTypography(
     headline = headline,
     title = title,
     body = body,

@@ -11,8 +11,10 @@ fun QaemTheme(
     content: @Composable () -> Unit,
 ) {
     val colors = if (isDarkTheme) QaemDarkColors else QaemLightColors
+    val typography = thmanyahTypography
     CompositionLocalProvider(
         LocalQaemColors provides colors,
+        LocalQaemTypography provides typography
     ) {
         content()
     }
@@ -22,4 +24,7 @@ object QaemTheme {
     val colors: QaemColors
         @Composable
         @ReadOnlyComposable get() = LocalQaemColors.current
+    val typography : QaemTypography
+        @Composable
+        @ReadOnlyComposable get() = LocalQaemTypography.current
 }
