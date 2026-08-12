@@ -85,6 +85,7 @@ private val title = SizedTypography(
         lineHeight = 28.sp
     ),
 )
+
 private val body = SizedTypography(
     extraLarge = TextStyle(
         fontSize = 18.sp,
@@ -111,6 +112,7 @@ private val body = SizedTypography(
         lineHeight = 42.sp
     ),
 )
+
 private val label = SizedTypography(
     extraLarge = TextStyle(
         fontSize = 20.sp,
@@ -137,7 +139,6 @@ private val label = SizedTypography(
         lineHeight = 22.sp
     ),
 )
-
 
 val thmanyahTypography = QaemFitTextStyle(
     headline = headline,
