@@ -25,6 +25,7 @@ data class StatusColors(
     val blueAccent: Color,
     val grayAccent: Color,
     val darkGreen: Color,
+    val purpleAccent : Color,
     val orangeAccent: Color,
     val accentColor: Color,
     val darkBlueAccent: Color,
@@ -44,7 +45,8 @@ val statusLightColors = StatusColors(
     orangeAccent = Color(0XFFFFF5BC),
     accentColor = Color(0xFFFEB249),
     darkGreen = Color(0xFF309449),
-    darkBlueAccent = Color(0xFF0095DF)
+    darkBlueAccent = Color(0xFF0095DF),
+    purpleAccent = Color(0xFF2C015C)
 )
 val textDark = TextColors(
     text = Color(0xFFE0DFDF),
@@ -60,7 +62,8 @@ val statusDarkColors = StatusColors(
     orangeAccent = Color(0XFFFFD088),
     accentColor = Color(0xFFFEB249),
     darkGreen = Color(0xFF309449),
-    darkBlueAccent = Color(0xFF0095DF)
+    darkBlueAccent = Color(0xFF0095DF),
+    purpleAccent = Color(0xFF2C015C)
 )
 
 val QaemLightColors = QaemColors(
